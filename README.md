@@ -14,10 +14,6 @@
  ## 演示
  演示链接：
  ## 本地打开：
- - 克隆仓库后终端使用python运行如下命令：
- 
-   python -m http.server 8000
- - 使用浏览器打开：
-  
-   localhost:8000
-   
+ - 下载压缩包 MoleculeSimulator-v1.0-offline.zip
+
+ - 按照使用说明进行操作即可
