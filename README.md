@@ -14,6 +14,6 @@
  ## 演示
  演示链接：
  ## 本地打开：
- - 下载压缩包 MoleculeSimulator-v1.0-offline.zip
+ - 下载压缩包 isos_of_gas.zip
 
  - 按照使用说明进行操作即可
