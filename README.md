@@ -12,7 +12,7 @@
  - 接入deepseek api以使学生可以实时提问并获得解答
  - 记录实验操作、实验反馈与问题以评估学生水平
  ## 演示
- 演示链接：
+ 演示链接：isosofgas.vercel.app 因为使用了vercel部署，需要科学上网
  ## 本地打开：
  - 下载压缩包 isos_of_gas.zip
 
