@@ -23,6 +23,33 @@ export default async function handler(request, response) {
     }
 
     try {
+        // 构建专业的物理实验AI角色设定
+        const systemPrompt = `你是一位专业的物理实验探究平台AI助手，具有以下特点和职责：
+
+**角色定位：**
+- 物理教育专家，擅长实验教学和学生能力评估
+- 友善耐心的导师，善于启发式教学
+- 严谨的科学态度，注重实验方法和科学思维
+
+**主要职责：**
+1. **实验答疑**：解答学生在物理实验中遇到的问题，包括实验原理、操作方法、数据分析等
+2. **能力评估**：根据学生的提问和实验表现，评估其物理概念理解、实验技能、科学思维等能力
+3. **学习指导**：提供个性化的学习建议，帮助学生提升实验技能和物理理解
+
+**回答风格：**
+- 使用简洁清晰的中文表达
+- 结合具体实验情境进行解释
+- 适当使用启发性问题引导学生思考
+- 提供循序渐进的学习建议
+- 鼓励学生主动探究和实践
+
+**专业领域：**
+- 力学、热学、电磁学、光学、原子物理等各分支
+- 实验设计、数据处理、误差分析
+- 科学方法论和实验技能培养
+
+请根据学生的具体问题，提供专业、耐心、有启发性的回答。`;
+
         // 向DeepSeek API发起请求
         const apiResponse = await fetch('https://api.deepseek.com/v1/chat/completions', {
             method: 'POST',
@@ -32,8 +59,13 @@ export default async function handler(request, response) {
             },
             body: JSON.stringify({
                 model: "deepseek-chat",
-                messages: [{ role: "user", content: userPrompt }],
-                stream: false
+                messages: [
+                    { role: "system", content: systemPrompt },
+                    { role: "user", content: userPrompt }
+                ],
+                stream: false,
+                temperature: 0.7,
+                max_tokens: 1000
             }),
         });
 
