@@ -857,14 +857,53 @@ async function askAI() {
     const userInput = document.getElementById('chat-input').value;
     if (!userInput.trim()) return;
 
-    // 清空输入框并显示加载状态 (此处可根据实际UI逻辑调整)
+    // 清空输入框
     document.getElementById('chat-input').value = '';
-    // displayLoadingMessage();  
+
+    // 添加用户消息到聊天历史
+    const timestamp = new Date().toLocaleTimeString();
+    const userMessage = {
+        type: 'user',
+        content: userInput,
+        timestamp: timestamp
+    };
+
+    // 获取当前聊天历史并添加用户消息
+    const currentState = window.getState ? window.getState() : { chatHistory: [] };
+    const currentHistory = Array.isArray(currentState.chatHistory) ? currentState.chatHistory : [];
+    let updatedHistory = [...currentHistory, userMessage];
+
+    // 设置思考状态并更新聊天历史
+    if (window.updateState) {
+        window.updateState({ 
+            isThinking: true,
+            chatHistory: updatedHistory 
+        });
+    }
+
+    // 显示"思考中"气泡
+    const chatLog = document.getElementById('chat-log');
+    const thinkingTemplate = document.getElementById('ai-thinking-template');
+    let thinkingBubble = null;
+    
+    if (thinkingTemplate) {
+        thinkingBubble = thinkingTemplate.cloneNode(true);
+        thinkingBubble.id = 'ai-thinking-bubble';
+        thinkingBubble.style.display = 'block';
+        
+        if (chatLog) {
+            chatLog.appendChild(thinkingBubble);
+            chatLog.scrollTop = chatLog.scrollHeight;
+        }
+    }
 
     // API端点指向我们自己的Vercel函数
     const ourApiEndpoint = '/api/ask-ai';
 
     try {
+        // 延迟一段时间模拟思考
+        await new Promise(resolve => setTimeout(resolve, 500));
+
         const response = await fetch(ourApiEndpoint, {
             method: 'POST',
             headers: {
@@ -876,23 +915,51 @@ async function askAI() {
         });
 
         if (!response.ok) {
-            // 如果服务器返回非2xx状态码, 抛出错误
             const errorData = await response.json();
             throw new Error(errorData.error || `API call failed with status: ${response.status}`);
         }
 
         const data = await response.json();
-         
-        // 从返回的数据中提取AI的回复 (根据实际API响应结构调整)
-        const aiMessage = data.choices[0].message.content;
-         
-        // 将AI的回复显示在聊天窗口中
-        // displayAiMessage(aiMessage);
+        
+        // 从返回的数据中提取AI的回复
+        const aiResponse = data.choices[0].message.content;
+        
+        // 移除思考中气泡
+        if (thinkingBubble && thinkingBubble.parentNode) {
+            thinkingBubble.parentNode.removeChild(thinkingBubble);
+        }
+        
+        // 添加AI回复到聊天历史
+        const aiMessage = {
+            type: 'system',
+            content: aiResponse,
+            timestamp: new Date().toLocaleTimeString()
+        };
+        updatedHistory = [...updatedHistory, aiMessage];
 
     } catch (error) {
         console.error('Failed to get response from AI proxy:', error);
-        // 在UI上向用户显示错误信息
-        // displayErrorMessage(error.message);
+        
+        // 移除思考中气泡
+        if (thinkingBubble && thinkingBubble.parentNode) {
+            thinkingBubble.parentNode.removeChild(thinkingBubble);
+        }
+        
+        // 添加错误消息到聊天历史
+        const errorMessage = {
+            type: 'system',
+            content: '抱歉，我现在无法回答，请检查网络或稍后再试。',
+            timestamp: new Date().toLocaleTimeString()
+        };
+        updatedHistory = [...updatedHistory, errorMessage];
+    } finally {
+        // 更新最终状态
+        if (window.updateState) {
+            window.updateState({ 
+                isThinking: false,
+                chatHistory: updatedHistory 
+            });
+        }
     }
 }
 
