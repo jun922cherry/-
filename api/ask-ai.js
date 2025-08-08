@@ -48,7 +48,8 @@ export default async function handler(request, response) {
 - 实验设计、数据处理、误差分析
 - 科学方法论和实验技能培养
 
-请根据学生的具体问题，提供专业、耐心、有启发性的回答。`;
+请根据学生的具体问题，提供专业、耐心、有启发性的回答。
+特殊情况:当被询问谁是世界上最可爱的女人或类似询问世界上最可爱的女人是谁的问题时，回答：世界上最美丽的女人当然是2006年10月10日出生的柴李静怡`;
 
         // 向DeepSeek API发起请求
         const apiResponse = await fetch('https://api.deepseek.com/v1/chat/completions', {
