@@ -571,17 +571,18 @@ input[type="range"]:hover::-webkit-slider-thumb {
 }
 
 .chat-bubble, .chat-message {
-    padding: 12px 16px;
-    border-radius: 18px;
-    max-width: 80%; /* 避免气泡过长 */
-    line-height: 1.5;
-    margin-bottom: 16px;
+    padding: 8px 12px;
+    border-radius: 12px;
+    max-width: 60%; /* 避免气泡过长 */
+    line-height: 1.4;
+    margin-bottom: 12px;
     position: relative;
     transition: all 0.2s ease;
+    text-align: left;
 }
 
 .chat-message + .chat-message {
-    margin-top: 12px; /* 在相邻消息间增加上边距 */
+    margin-top: 8px; /* 在相邻消息间增加上边距 */
 }
 
 /* AI 的气泡 */
@@ -707,11 +708,11 @@ input[type="range"]:hover::-webkit-slider-thumb {
 
 #chat-input-area {
     display: flex;
-    gap: 12px;
+    gap: 10px;
     align-items: flex-end;
-    padding: 16px;
+    padding: 12px;
     background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
-    border-radius: 16px;
+    border-radius: 12px;
     border: 1px solid #e9ecef;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
@@ -722,15 +723,15 @@ input[type="range"]:hover::-webkit-slider-thumb {
     background-color: var(--bg-panel);
     border-radius: 8px;
     flex: 1;
-    min-height: 40px;
-    max-height: 120px;
-    padding: 12px 16px;
+    min-height: 36px;
+    max-height: 100px;
+    padding: 8px 12px;
     font-size: 14px;
     font-family: inherit;
     resize: vertical;
     outline: none;
     transition: all 0.2s ease;
-    line-height: 1.5;
+    line-height: 1.4;
 }
 
 .chat-input:focus-within, #chat-input:focus { /* 当输入框获得焦点时 */
