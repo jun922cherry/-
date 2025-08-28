@@ -252,39 +252,52 @@ function initPhysicsEngine(initialState) {
     
     // ★核心函数：自定义碰撞处理★
     function handleCustomCollision(bodyA, bodyB) {
-        // 情况A：分子与墙体（静态物体）的碰撞
-        if (bodyA.isStatic || bodyB.isStatic) {
-            const molecule = bodyA.isStatic ? bodyB : bodyA;
-            const wall = bodyA.isStatic ? bodyA : bodyB;
+        // 判断是否为墙体的辅助函数
+        function isWall(body) {
+            return body.isStatic || 
+                   (walls.left && body.id === walls.left.id) ||
+                   (walls.right && body.id === walls.right.id) ||
+                   (walls.top && body.id === walls.top.id) ||
+                   (walls.bottom && body.id === walls.bottom.id);
+        }
+        
+        // 情况A：分子与墙体的碰撞（包括静态墙体和非静态活塞）
+        if (isWall(bodyA) || isWall(bodyB)) {
+            const molecule = isWall(bodyA) ? bodyB : bodyA;
+            const wall = isWall(bodyA) ? bodyA : bodyB;
             
-            // 添加碰撞效果
-            if (particles.includes(molecule)) {
-                collisionEffects.set(molecule.id, { time: Date.now(), intensity: 1 });
+            // 只处理分子与墙体的碰撞，跳过墙体之间的碰撞
+            if (!particles.includes(molecule)) {
+                return;
             }
             
-            // 对于与垂直墙壁的碰撞，水平速度反向
-            // 对于与水平墙壁的碰撞，垂直速度反向
+            // 添加碰撞效果
+            collisionEffects.set(molecule.id, { time: Date.now(), intensity: 1 });
+            
+            // 物理原理：只反转垂直于边界的速度分量，保持平行于边界的速度分量不变
+            // 垂直墙体（左墙/右墙）：垂直于边界=水平方向(x)，平行于边界=垂直方向(y)
+            // 水平墙体（上墙/下墙）：垂直于边界=垂直方向(y)，平行于边界=水平方向(x)
             if (isVerticalWall(wall.id)) {
+                // 垂直墙体碰撞：只反转垂直于边界的速度分量(x方向)，保持平行分量(y方向)不变
                 Matter.Body.setVelocity(molecule, {
-                    x: -molecule.velocity.x,
-                    y: molecule.velocity.y
+                    x: -molecule.velocity.x,  // 反转垂直于边界的分量
+                    y: molecule.velocity.y    // 保持平行于边界的分量
                 });
-            } else { // 假设是水平墙
+                console.log(`垂直墙体碰撞: 分子${molecule.id}与墙体${wall.id}碰撞，反转垂直于边界的速度分量(x方向)`);
+            } else { // 水平墙体
+                // 水平墙体碰撞：只反转垂直于边界的速度分量(y方向)，保持平行分量(x方向)不变
                 Matter.Body.setVelocity(molecule, {
-                    x: molecule.velocity.x,
-                    y: -molecule.velocity.y
+                    x: molecule.velocity.x,   // 保持平行于边界的分量
+                    y: -molecule.velocity.y   // 反转垂直于边界的分量
                 });
+                console.log(`水平墙体碰撞: 分子${molecule.id}与墙体${wall.id}碰撞，反转垂直于边界的速度分量(y方向)`);
             }
             
         // 情况B：两个分子之间的碰撞 (核心物理)
-        } else {
+        } else if (particles.includes(bodyA) && particles.includes(bodyB)) {
             // 添加碰撞效果
-            if (particles.includes(bodyA)) {
-                collisionEffects.set(bodyA.id, { time: Date.now(), intensity: 1 });
-            }
-            if (particles.includes(bodyB)) {
-                collisionEffects.set(bodyB.id, { time: Date.now(), intensity: 1 });
-            }
+            collisionEffects.set(bodyA.id, { time: Date.now(), intensity: 1 });
+            collisionEffects.set(bodyB.id, { time: Date.now(), intensity: 1 });
             
             resolveElasticCollision(bodyA, bodyB);
         }
