@@ -63,6 +63,9 @@ export let state = {
     isEvaluating: false,      // 是否正在请求评价
     evaluationError: null,    // 评价错误信息（若有）
     
+    // V2.EVAL.QA: AI问答记录（用于评价分析）
+    qaHistory: [],            // 记录用户向AI提出的问题 [{ question: "..." }, ...]
+    
     // 日志
     log: []
 };
