@@ -9,7 +9,7 @@ const FEEDBACK_HINT_TEXT = '请先在下方的【实验记录与反馈】窗口�
 
 // 图标常量 - Base64编码的SVG图标
 const ICONS = {
-    welcome: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDEyMCAxMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiByeD0iMTAiIGZpbGw9IiNmNWY1ZjciLz4KPHN2ZyB4PSIzMCIgeT0iMzAiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSIjMDA3MWUzIj4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCAyNCAyNCIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZT0iY3VycmVudENvbG9yIiBjbGFzcz0ic2l6ZS02Ij4KICA8cGF0aCBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGQ9Ik0xMC41IDZhNy41IDcuNSAwIDEgMCAwIDE1IDcuNSA3LjUgMCAwIDAgMC0xNVoiIC8+CiAgPHBhdGggc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBkPSJtMTMuNSAxMC41IDYgNiIgLz4KICA8cGF0aCBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGQ9Im0xMy41IDEwLjUgNiA2IiAvPgo8L3N2Zz4KPC9zdmc+Cjwvc3ZnPg==',
+    welcome: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDEyMCAxMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiByeD0iMTAiIGZpbGw9IiNmNWY1ZjciLz4KPHN2ZyB4PSIzMCIgeT0iMzAiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSIjMDA3MWUzIj4KICA8cGF0aCBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGQ9Ik0xMC41IDZhNy41IDcuNSAwIDEgMCAwIDE1IDcuNSA3LjUgMCAwIDAgMC0xNVoiIC8+CiAgPHBhdGggc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBkPSJtMTMuNSAxMC41IDYgNiIgLz4KICA8cGF0aCBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGQ9Im0xMy41IDEwLjUgNiA2IiAvPgo8L3N2Zz4KPC9zdmc+Cjwvc3ZnPg==',
     isothermal: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDEyMCAxMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiByeD0iMTAiIGZpbGw9IiNmNWY1ZjciLz4KPGNpcmNsZSBjeD0iNjAiIGN5PSI2MCIgcj0iMzAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzAwNzFlMyIgc3Ryb2tlLXdpZHRoPSIzIi8+Cjx0ZXh0IHg9IjYwIiB5PSI2NSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE0IiBmaWxsPSIjMDA3MWUzIj5UPWNvbnN0PC90ZXh0Pgo8L3N2Zz4=',
     isobaric: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDEyMCAxMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiByeD0iMTAiIGZpbGw9IiNmNWY1ZjciLz4KPGNpcmNsZSBjeD0iNjAiIGN5PSI2MCIgcj0iMzAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2RjMzU0NSIgc3Ryb2tlLXdpZHRoPSIzIi8+Cjx0ZXh0IHg9IjYwIiB5PSI2NSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE0IiBmaWxsPSIjZGMzNTQ1Ij5QPWNvbnN0PC90ZXh0Pgo8L3N2Zz4=',
     isochoric: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjEyMCIgdmlld0JveD0iMCAwIDEyMCAxMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiByeD0iMTAiIGZpbGw9IiNmNWY1ZjciLz4KPGNpcmNsZSBjeD0iNjAiIGN5PSI2MCIgcj0iMzAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzI4YTc0NSIgc3Ryb2tlLXdpZHRoPSIzIi8+Cjx0ZXh0IHg9IjYwIiB5PSI2NSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE0IiBmaWxsPSIjMjhhNzQ1Ij5WPWNvbnN0PC90ZXh0Pgo8L3N2Zz4=',
@@ -236,13 +236,17 @@ export function updateGuidance(state) {
             ${generateGuidanceButtons(state.currentStep, isExperimentLocked)}
         `;
     } else if (state.experimentPhase === 'free') {
+        const hasFinalConclusion = !!state.currentStep?.feedbackSubmitted || !!state.experimentEnded;
+        const disabledAttr = hasFinalConclusion ? '' : 'disabled';
+        const hint = hasFinalConclusion ? '' : '<div class="next-step-hint is-visible">请先在下方提交最终总结以解锁评价</div>';
         guidanceContentElement.innerHTML = `
             <img src="${ICONS.freeExplore}" alt="自由探索图标" class="guidance-illustration">
             <h4 class="guidance-title">自由探索模式</h4>
             <p class="guidance-text">恭喜您已掌握真实气体模型的核心！现在您可以自由调节所有参数，深入探索了。</p>
             <p class="guidance-text">试试观察新加入的"器壁碰撞监视器"，它的数据与宏观压强有怎样的联系？或者，不同气体的 a, b 值差异在真实世界中又对应着什么物理特性呢？</p>
             <div class="guidance-buttons">
-                <button id="request-evaluation-btn" class="action-btn primary">完成实验并获取评价</button>
+                <button id="request-evaluation-btn" class="action-btn primary" ${disabledAttr}>完成实验并获取评价</button>
+                ${hint}
             </div>
         `;
     }
@@ -283,6 +287,8 @@ export function updateGuidance(state) {
         // 触发实验评价
         if (target.id === 'request-evaluation-btn') {
             if (window.requestEvaluation) {
+                // 点击后立即禁用，避免重复提交
+                target.setAttribute('disabled', 'disabled');
                 window.requestEvaluation();
             }
         }
