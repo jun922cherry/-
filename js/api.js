@@ -36,12 +36,12 @@ export async function getAiResponse(userMessage) {
 }
 
 // V2.EVAL: 调用实验评价端点
-export async function evaluateExperiment(operationLog, userFeedback) {
+export async function evaluateExperiment(operationLog, userFeedback, qaHistory) {
     try {
         const response = await fetch('/api/evaluate-experiment', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ operationLog, userFeedback })
+            body: JSON.stringify({ operationLog, userFeedback, qaHistory })
         });
         if (!response.ok) {
             const text = await response.text();
