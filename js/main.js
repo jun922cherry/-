@@ -189,11 +189,19 @@ async function handleRequestEvaluation() {
     // 过滤用户反馈：仅保留 type === 'user' 的消息
     const userFeedback = (current.chatHistory || []).filter(m => m && m.type === 'user');
     const operationLog = current.log || [];
+    // V2.EVAL.QA: 收集AI问答历史
+    const qaHistory = current.qaHistory || [];
+    
+    console.log('📊 收集评价数据:', { 
+        operationLog: operationLog.length, 
+        userFeedback: userFeedback.length, 
+        qaHistory: qaHistory.length 
+    });
     
     // 设置加载状态
     stateManager.updateState({ isEvaluating: true, evaluationError: null });
     try {
-        const result = await evaluateExperiment(operationLog, userFeedback);
+        const result = await evaluateExperiment(operationLog, userFeedback, qaHistory);
         stateManager.updateState({ evaluationResult: result });
         // 显示模态框
         showEvaluationModal(true, result);
@@ -308,6 +316,13 @@ async function handleSendMessage(action) {
         }
     } else if (action.type === 'ask_ai') {
         // 自由探究阶段的AI提问
+        
+        // V2.EVAL.QA: 记录用户问题到qaHistory
+        const currentQaHistory = Array.isArray(stateManager.state.qaHistory) ? stateManager.state.qaHistory : [];
+        stateManager.updateState({ 
+            qaHistory: [...currentQaHistory, { question: action.payload }]
+        });
+        console.log('✅ 记录AI提问到qaHistory:', action.payload);
         
         // V3.1: 立即设置isThinking状态为true，锁定输入控件
         stateManager.updateState({ isThinking: true });
