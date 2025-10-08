@@ -198,17 +198,18 @@ async function handleRequestEvaluation() {
         qaHistory: qaHistory.length 
     });
     
-    // 设置加载状态
+    // 先展示模态框并进入加载态
     stateManager.updateState({ isEvaluating: true, evaluationError: null });
+    showEvaluationModal(true, null);
+
     try {
         const result = await evaluateExperiment(operationLog, userFeedback, qaHistory);
         stateManager.updateState({ evaluationResult: result });
-        // 显示模态框
         showEvaluationModal(true, result);
     } catch (err) {
         stateManager.updateState({ evaluationError: err.message || String(err) });
         Notifier.show('评价失败，请稍后重试', 'error');
-        showEvaluationModal(true, null); // 以错误态展示
+        showEvaluationModal(true, null);
     } finally {
         stateManager.updateState({ isEvaluating: false });
     }
