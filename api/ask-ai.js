@@ -2,12 +2,12 @@
 
 // Vercel Serverless Function, 运行在Node.js环境
 export default async function handler(request, response) {
-    // 从环境变量中安全地读取API密钥
-    const apiKey = process.env.AI_PROVIDER_API_KEY;
+    // 从环境变量中安全地读取API密钥（统一使用DEEPSEEK_API_KEY）
+    const apiKey = process.env.DEEPSEEK_API_KEY;
 
     // 检查API密钥是否存在
     if (!apiKey) {
-        console.error('AI_PROVIDER_API_KEY environment variable is not set');
+        console.error('DEEPSEEK_API_KEY environment variable is not set');
         return response.status(500).json({ error: 'Server configuration error: API key not found' });
     }
 
@@ -50,8 +50,8 @@ export default async function handler(request, response) {
 
 请根据学生的具体问题，提供专业、耐心、有启发性的回答。`;
 
-        // 向DeepSeek API发起请求
-        const apiResponse = await fetch('https://api.deepseek.com/v1/chat/completions', {
+        // 向DeepSeek API发起请求（统一使用标准端点）
+        const apiResponse = await fetch('https://api.deepseek.com/chat/completions', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
