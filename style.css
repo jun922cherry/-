@@ -1235,6 +1235,11 @@ input[type="range"]:hover::-webkit-slider-thumb {
     border-color: var(--accent-color);  /* V2.2.5: 只保留边框变色效果 */
 }
 
+/* --- 器壁碰撞监视器样式 --- */
+#collision-monitor-panel {
+    padding-bottom: 24px !important; /* 增加底部padding */
+}
+
 /* --- 响应式设计 --- */
 @media (max-width: 1200px) {
     .app-container {
