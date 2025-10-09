@@ -226,7 +226,9 @@ function showEvaluationModal(visible, data) {
     const loading = overlay.querySelector('.evaluation-loading');
     const errorBox = overlay.querySelector('.evaluation-error');
     if (visible) {
+        // 确保模态框真正可见：设置display并添加show类控制opacity/visibility
         overlay.style.display = 'flex';
+        overlay.classList.add('show');
         const s = stateManager.state;
         // 加载态：使用 isLoadingEvaluation 作为统一开关
         if (s.isLoadingEvaluation) {
@@ -249,6 +251,8 @@ function showEvaluationModal(visible, data) {
             if (errorBox) errorBox.style.display = 'none';
         }
     } else {
+        // 隐藏模态框：移除show类并设置display为none
+        overlay.classList.remove('show');
         overlay.style.display = 'none';
     }
 }
