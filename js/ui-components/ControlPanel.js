@@ -292,7 +292,6 @@ function bindControlEvents(onControlChange, onFlowAction, onLockToggle) {
  * @param {Object} state - 全局状态
  */
 export function updateControls(state) {
-    // V3.3: 门控逻辑 - 检查是否需要禁用控件
     const isLocked = state.isExperimentLocked || false;
     const isFinalized = !!state.isFinalized;
     
@@ -307,11 +306,12 @@ export function updateControls(state) {
         }
     }
     
-    // 原有更新逻辑
     // V2.1: 更新气体类型选择器
     const gasTypeSelect = document.getElementById('gas-type-select');
     if (gasTypeSelect && state.gasType) {
         gasTypeSelect.value = state.gasType;
+        // 终末锁定或门锁时禁用气体选择器
+        gasTypeSelect.disabled = isLocked || isFinalized;
     }
     
     // V2.1: 更新a和b参数
@@ -352,13 +352,13 @@ export function updateControls(state) {
     document.getElementById('moles-control').value = state.n;
     document.getElementById('moles-value').textContent = state.n.toFixed(1);
     
-    // V3.3/V2.EVAL：根据锁定与终末锁定禁用/启用所有滑块
+    // V3.3/V2.EVAL：根据锁定与终末锁定禁用所有滑块
     const sliders = ['pressure-control', 'volume-control', 'temperature-control', 'moles-control', 'a-control', 'b-control'];
     sliders.forEach(sliderId => {
         const slider = document.getElementById(sliderId);
         if (slider) {
             const prev = slider.disabled;
-            slider.disabled = isLocked || isFinalized || slider.disabled; // 如果已是不可用保持不可用
+            slider.disabled = isLocked || isFinalized || slider.disabled;
             if (prev !== slider.disabled) {
                 console.log(`🎛️ 滑块 ${sliderId} 状态变化: ${prev ? '禁用' : '启用'} → ${slider.disabled ? '禁用' : '启用'}`);
             }
