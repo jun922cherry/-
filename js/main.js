@@ -71,6 +71,14 @@ document.addEventListener('DOMContentLoaded', () => {
     FloatingWindows.initFloatingLog();
     FloatingWindows.initWelcomeModal(handleFlowAction);
     
+    // 绑定评价弹窗关闭按钮
+    const evalCloseBtn = document.getElementById('evaluation-close-btn');
+    if (evalCloseBtn) {
+        evalCloseBtn.addEventListener('click', () => {
+            showEvaluationModal(false, null);
+        });
+    }
+    
     // V2.2: 初始化碰撞监视器
     CollisionMonitor.initCollisionMonitor();
     simulation.setCollisionRecorder(CollisionMonitor.recordCollision);
