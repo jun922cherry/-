@@ -1,31 +1,17 @@
 {
+  "version": 2,
   "functions": {
-    "api/ask-ai.js": {
-      "runtime": "nodejs18.x"
-    },
-    "api/chat.js": {
-      "runtime": "nodejs18.x"
-    },
-    "api/evaluate-experiment.js": {
-      "runtime": "nodejs18.x"
+    "api/*.js": {
+      "runtime": "nodejs20.x"
     }
   },
   "headers": [
     {
       "source": "/(.*)",
       "headers": [
-        {
-          "key": "X-Content-Type-Options",
-          "value": "nosniff"
-        },
-        {
-          "key": "X-Frame-Options",
-          "value": "DENY"
-        },
-        {
-          "key": "X-XSS-Protection",
-          "value": "1; mode=block"
-        }
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options", "value": "DENY" },
+        { "key": "X-XSS-Protection", "value": "1; mode=block" }
       ]
     }
   ]
